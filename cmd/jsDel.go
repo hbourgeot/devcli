@@ -19,8 +19,9 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		fmt.Println("jsDel called")
+		return nil
 	},
 }
 
@@ -33,7 +34,7 @@ func init() {
 	// and all subcommands, e.g.:
 	// jsDelCmd.PersistentFlags().String("foo", "", "A help for foo")
 
-	// Cobra supports local flags which will only run when this command
+	// Cobra supports local flags which will only RunE when this command
 	// is called directly, e.g.:
 	// jsDelCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

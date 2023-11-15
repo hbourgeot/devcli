@@ -1,5 +1,6 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
+
 */
 package cmd
 
@@ -9,9 +10,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// reloadCmd represents the reload command
-var reloadCmd = &cobra.Command{
-	Use:   "reload",
+// docompUCmd represents the docompU command
+var docompUCmd = &cobra.Command{
+	Use:   "docompU",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -19,22 +20,21 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	RunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Println("reload called")
-		return nil
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("docompU called")
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(reloadCmd)
+	rootCmd.AddCommand(docompUCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// reloadCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// docompUCmd.PersistentFlags().String("foo", "", "A help for foo")
 
-	// Cobra supports local flags which will only RunE when this command
+	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// reloadCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// docompUCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
