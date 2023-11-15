@@ -1,6 +1,5 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
@@ -12,7 +11,7 @@ import (
 
 // jsDelCmd represents the jsDel command
 var jsDelCmd = &cobra.Command{
-	Use:   "jsDel",
+	Use:   "js-del",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
