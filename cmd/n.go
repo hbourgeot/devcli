@@ -55,7 +55,7 @@ var nCmd = &cobra.Command{
 }
 
 func init() {
-	nCmd.Flags().StringP("action", "act", "i", "NPM Action, can be: i[n]it, [i]nstall, [u]ninstall")
+	nCmd.Flags().StringP("action", "a", "i", "NPM Action, can be: i[n]it, [i]nstall, [u]ninstall")
 	nCmd.Flags().BoolP("save-dev", "D", false, "Is a Dev dependency?")
 
 	rootCmd.AddCommand(nCmd)
