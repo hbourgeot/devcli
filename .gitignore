@@ -1,1 +1,3 @@
 cmd/enableFn.go
+.gitignore
+test/
