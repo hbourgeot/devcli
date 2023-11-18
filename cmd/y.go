@@ -1,40 +1,76 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
 import (
 	"fmt"
 
+	"github.com/hbourgeot/devcli/helpers"
 	"github.com/spf13/cobra"
 )
 
-// yCmd represents the y command
+// pCmd represents the p command
 var yCmd = &cobra.Command{
 	Use:   "y",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Yarn Command",
+	Long: `Runs a Yarn command, like:
+	yarn [a]dd
+	yarn [i]nstall (default)
+	yarn [u]ninstall
+	yarn i[n]it
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("y called")
+	With the --save-dev or -D flag and packages for install/uninstall`,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		action, _ := cmd.Flags().GetString("action")
+		isDev, _ := cmd.Flags().GetBool("save-dev")
+
+		fmt.Println(action)
+		switch action {
+		case "a", "add":
+			if err := helpers.PnpmInstall(args, isDev); err != nil {
+				return err
+			}
+		case "i", "install":
+			if err := helpers.PnpmInstall(nil, false); err != nil {
+				return err
+			}
+		case "u", "uninstall":
+			if err := helpers.PnpmUninstall(args); err != nil {
+				return err
+			}
+		case "n", "init":
+			if err := helpers.PnpmInit(); err != nil {
+				return err
+			}
+		default:
+			if action == "init" {
+				if err := helpers.PnpmInit(); err != nil {
+					return err
+				}
+			}
+			if err := helpers.PnpmInstall(args, isDev); err != nil {
+				return err
+			}
+		}
+
+		return nil
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(yCmd)
+	yCmd.Flags().StringP("action", "a", "a", "Yarn Action, can be: [a]dd, i[n]it, [i]nstall, [u]ninstall")
+	yCmd.Flags().BoolP("save-dev", "D", false, "Is a Dev dependency?")
+
+	rootCmd.AddCommand(pCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// yCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// pCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// yCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// pCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

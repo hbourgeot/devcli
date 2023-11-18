@@ -7,7 +7,13 @@ import (
 
 func YarnInstall(packages []string, isDev bool) error {
 	// Create npm command with the i argument for install
-	cmd := exec.Command("npm", "i")
+	var cmd *exec.Cmd
+	if len(packages) > 0 {
+		cmd = exec.Command("yarn", "add")
+		cmd.Args = append(cmd.Args, packages...)
+	} else {
+		cmd = exec.Command("yarn")
+	}
 
 	// Check if install is for dev packages
 	if isDev {
@@ -15,9 +21,6 @@ func YarnInstall(packages []string, isDev bool) error {
 	}
 
 	// Append packages to install if provided
-	if len(packages) > 0 {
-		cmd.Args = append(cmd.Args, packages...)
-	}
 
 	// Set command stdout and stderr to os stdout and stderr
 	cmd.Stdout = os.Stdout
