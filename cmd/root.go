@@ -4,6 +4,7 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -21,7 +22,21 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
-	// RunE: func(cmd *cobra.Command, args []string) { },
+	RunE: func(cmd *cobra.Command, args []string) error {
+		version, _ := cmd.Flags().GetBool("version")
+		about, _ := cmd.Flags().GetBool("about")
+
+		if version {
+			fmt.Println("DevCLI version 0.0.2")
+		}
+
+		if about {
+			fmt.Println("Author: Henrry Bourgeot")
+			fmt.Println("GitHub: https://github.com/hbourgeot")
+		}
+
+		return nil
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -43,5 +58,5 @@ func init() {
 	// Cobra also supports local flags, which will only RunE
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("version", "v", false, "Print current version")
-	rootCmd.Flags().BoolP("about", "a", false, "About the CLI")
+	rootCmd.Flags().BoolP("about", "a", false, "About the author")
 }
