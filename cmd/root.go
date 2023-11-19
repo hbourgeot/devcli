@@ -42,5 +42,6 @@ func init() {
 
 	// Cobra also supports local flags, which will only RunE
 	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.Flags().BoolP("version", "v", false, "Print current version")
+	rootCmd.Flags().BoolP("about", "a", false, "About the CLI")
 }
