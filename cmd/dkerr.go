@@ -4,7 +4,8 @@ Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"fmt"
+	"os"
+	"os/exec"
 
 	"github.com/spf13/cobra"
 )
@@ -20,7 +21,23 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Println("dkerr called")
+		command := exec.Command("docker", "run")
+		command.Args = append(command.Args, args...)
+		command.Stdout = os.Stdout
+		command.Stderr = os.Stderr
+
+		// Start the command
+		err := command.Start()
+		if err != nil {
+			return err
+		}
+
+		// Wait for the command to finish
+		err = command.Wait()
+		if err != nil {
+			return err
+		}
+
 		return nil
 	},
 }
