@@ -61,7 +61,7 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	installCmd.Flags().BoolP("golang", "g", false, "Get a golang package")
-	installCmd.Flags().BoolP("npm", "npm", false, "Get a NPM package")
+	installCmd.Flags().BoolP("npm", "n", false, "Get a NPM package")
 	installCmd.Flags().BoolP("yarn", "y", false, "Get a NPM package with yarn")
 	installCmd.Flags().BoolP("pnpm", "p", false, "Get a NPM package with pnpm")
 	installCmd.Flags().BoolP("save-dev", "D", false, "Install as dev dependency")
