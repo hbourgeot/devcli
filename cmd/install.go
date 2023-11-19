@@ -11,7 +11,7 @@ import (
 // installCmd represents the install command
 var installCmd = &cobra.Command{
 	Use:   "i",
-	Short: "A brief description of your command",
+	Short: "Install something",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
@@ -25,25 +25,26 @@ to quickly create a Cobra application.`,
 		isPnpm, _ := cmd.Flags().GetBool("pnpm")
 		isDev, _ := cmd.Flags().GetBool("save-dev")
 		isGlobal, _ := cmd.Flags().GetBool("global")
+		noGithub, _ := cmd.Flags().GetBool("no-gh")
 
 		if isGolang {
 			if isGlobal {
-				return helpers.GoInstall(args...)
+				return helpers.GoInstall(noGithub, args...)
 			}
 
-			return helpers.Get(args...)
+			return helpers.Get(noGithub, args...)
 		}
 
 		if isNpm {
-			return helpers.NpmInstall(args, isDev)
+			return helpers.NpmInstall(args, isDev, isGlobal)
 		}
 
 		if isYarn {
-			return helpers.YarnInstall(args, isDev)
+			return helpers.YarnInstall(args, isDev, isGlobal)
 		}
 
 		if isPnpm {
-			helpers.PnpmInstall(args, isDev)
+			helpers.PnpmInstall(args, isDev, isGlobal)
 		}
 		return nil
 	},
@@ -66,4 +67,5 @@ func init() {
 	installCmd.Flags().BoolP("pnpm", "p", false, "Get a NPM package with pnpm")
 	installCmd.Flags().BoolP("save-dev", "D", false, "Install as dev dependency")
 	installCmd.Flags().BoolP("global", "G", false, "install globally (with NPM or 'go install')")
+	installCmd.Flags().BoolP("no-gh", "H", false, "Install a golang package not located in github.com")
 }

@@ -5,8 +5,14 @@ import (
 	"os/exec"
 )
 
-func Get(args ...string) error {
+func Get(github bool, args ...string) error {
 	cmd := exec.Command("go", "get -u")
+	if !github {
+		for i, pkg := range args {
+			args[i] = "github.com/" + pkg
+		}
+	}
+
 	cmd.Args = append(cmd.Args, args...)
 
 	// Set command stdout and stderr to os stdout and stderr
@@ -28,8 +34,14 @@ func Get(args ...string) error {
 	return nil
 }
 
-func GoInstall(args ...string) error {
+func GoInstall(github bool, args ...string) error {
 	cmd := exec.Command("go", "install")
+	if !github {
+		for i, pkg := range args {
+			args[i] = "github.com/" + pkg
+		}
+	}
+
 	cmd.Args = append(cmd.Args, args...)
 
 	// Set command stdout and stderr to os stdout and stderr

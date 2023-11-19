@@ -5,13 +5,15 @@ import (
 	"os/exec"
 )
 
-func NpmInstall(packages []string, isDev bool) error {
+func NpmInstall(packages []string, isDev, isGlobal bool) error {
 	// Create npm command with the i argument for install
 	cmd := exec.Command("npm", "i")
 
 	// Check if install is for dev packages
 	if isDev {
 		cmd.Args = append(cmd.Args, "-D")
+	} else if isGlobal {
+		cmd.Args = append(cmd.Args, "-g")
 	}
 
 	// Append packages to install if provided

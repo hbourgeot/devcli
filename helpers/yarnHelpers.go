@@ -5,7 +5,7 @@ import (
 	"os/exec"
 )
 
-func YarnInstall(packages []string, isDev bool) error {
+func YarnInstall(packages []string, isDev, isGlobal bool) error {
 	// Create npm command with the i argument for install
 	var cmd *exec.Cmd
 	if len(packages) > 0 {
@@ -18,6 +18,8 @@ func YarnInstall(packages []string, isDev bool) error {
 	// Check if install is for dev packages
 	if isDev {
 		cmd.Args = append(cmd.Args, "-D")
+	} else if isGlobal {
+		return NpmInstall(packages, false, true)
 	}
 
 	// Append packages to install if provided
